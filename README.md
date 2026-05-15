@@ -391,7 +391,7 @@ as I don't want to overcomplicate this script for rare use cases.
 
 ## Conclusion
 
-That's how you will login when instance will be created (notice opc default username)
+That's how you will login when instance will be created. (notice opc default username)
 
 ```bash
 ssh -i ~/.ssh/id_rsa opc@ip.add.re.ss
