@@ -30,6 +30,11 @@ jobs:
           
       - name: Create .env file
         run: touch .env
+        
+      - name: Create private key file
+        run: |
+          echo "${{ secrets.OCI_PRIVATE_KEY }}" > /home/runner/work/oci-ampere/oci-ampere/private_key.pem
+          chmod 600 /home/runner/work/oci-ampere/oci-ampere/private_key.pem
 
       - name: Run script
         run: php index.php
