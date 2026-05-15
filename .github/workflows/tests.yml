@@ -5,6 +5,7 @@ on:
   schedule:
     - cron: '*/5 * * * *'
 
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
@@ -18,6 +19,14 @@ jobs:
 
       - name: Install dependencies
         run: composer install --no-progress --no-interaction
+      
+      - name: Debug env
+        run: |
+          echo "SHAPE=$OCI_SHAPE"
+          echo "OCPUS=$OCI_OCPUS"
+        env:
+          OCI_SHAPE: ${{ secrets.OCI_SHAPE }}
+          OCI_OCPUS: ${{ secrets.OCI_OCPUS }}
 
       - name: Run script
         run: php index.php
