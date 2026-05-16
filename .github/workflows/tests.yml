@@ -3,7 +3,8 @@ name: Run script
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/5 0-6 * * *'    # gece 00:00-06:00 UTC
+    - cron: '*/5 12-14 * * *'  # öğlen 12:00-14:00 UTC
 
 
 jobs:
