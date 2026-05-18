@@ -4,8 +4,6 @@
 <summary> 🇬🇧 English </summary>
 
 
-
-````md
 # 🦾 OCI Ampere Hunter — GitHub Actions Workflow
 
 A GitHub Actions workflow that automatically hunts for a **4 OCPU / 24 GB RAM Ampere A1** instance on Oracle Cloud Infrastructure by bypassing the infamous **“Out of Host Capacity”** error.
@@ -220,7 +218,6 @@ The workflow logs will contain the newly created instance details in JSON format
 # License
 
 MIT
-````
 
 
 </details>
