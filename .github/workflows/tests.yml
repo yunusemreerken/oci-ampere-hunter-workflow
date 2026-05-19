@@ -1,42 +1,32 @@
 name: Run script
-
 on:
   workflow_dispatch:
   schedule:
-  - cron: '*/5 21-23 * * *'  # Istanbul 00:00-02:59
-  - cron: '*/5 0-3 * * *'    # Istanbul 03:00-06:00
-  - cron: '*/5 9-11 * * *'  # Istanbul 13:00-15:00
-
+  - cron: '*/5 21-23 * * *'
+  - cron: '*/5 0-3 * * *'
+  - cron: '*/5 9-11 * * *'
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-
+          
       - name: Install dependencies
         run: composer install --no-progress --no-interaction
-      
-      - name: Debug env
-        run: |
-          echo "SHAPE=$OCI_SHAPE"
-          echo "OCPUS=$OCI_OCPUS"
-        env:
-          OCI_SHAPE: ${{ secrets.OCI_SHAPE }}
-          OCI_OCPUS: ${{ secrets.OCI_OCPUS }}
-          
+
       - name: Create .env file
         run: touch .env
-        
+
       - name: Create private key file
         run: |
-          echo "${{ secrets.OCI_PRIVATE_KEY }}" > /home/runner/work/oci-ampere/oci-ampere/private_key.pem
-          chmod 600 /home/runner/work/oci-ampere/oci-ampere/private_key.pem
+          echo "${{ secrets.OCI_PRIVATE_KEY }}" > ${{ github.workspace }}/private_key.pem
+          chmod 600 ${{ github.workspace }}/private_key.pem
 
       - name: Run script
         run: php index.php
@@ -45,7 +35,7 @@ jobs:
           OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
           OCI_TENANCY_ID: ${{ secrets.OCI_TENANCY_ID }}
           OCI_KEY_FINGERPRINT: ${{ secrets.OCI_KEY_FINGERPRINT }}
-          OCI_PRIVATE_KEY_FILENAME: ${{ secrets.OCI_PRIVATE_KEY_FILENAME }}
+          OCI_PRIVATE_KEY_FILENAME: ${{ github.workspace }}/private_key.pem
           OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
           OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
           OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
